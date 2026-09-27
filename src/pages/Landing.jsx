@@ -29,7 +29,7 @@ export default function Landing({
         {/* Article Header */}
         <header className="article-header">
           <h1 className="article-main-headline">
-            iPhone 18 Pro Max brings variable aperture and a more serious approach to smartphone photography
+            punjab school news
           </h1>
 
           <p className="article-subheadline">

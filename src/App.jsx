@@ -47,7 +47,7 @@ export default function App() {
             element={
               <Landing
                 posterSrc="/assets/poster.jpg"
-                poster2Src="/assets/poster2.jpg"
+                poster2Src="/assets/poster.jpg"
               />
             }
           />

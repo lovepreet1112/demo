@@ -1,0 +1,683 @@
+/* ==========================================================================
+   Telegraph India Mobile Editorial Design System
+   Exact replication of mobile layout, typography, colors, and content
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&family=Open+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg-page: #f4f5f7;
+  --bg-mobile: #ffffff;
+  --text-headline: #111111;
+  --text-subheadline: #374151;
+  --text-body: #1f2937;
+  --text-meta: #6b7280;
+  --text-nav: #1f2937;
+  --border-light: #e5e7eb;
+  --accent-red: #dc2626;
+  --accent-blue: #0b57d0;
+  --accent-blue-hover: #0842a0;
+  --font-serif: 'Merriweather', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Open Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background-color: var(--bg-page);
+  scroll-behavior: smooth;
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  background-color: var(--bg-page);
+  font-family: var(--font-sans);
+  color: var(--text-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.app-root {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  background-color: var(--bg-page);
+}
+
+/* ==========================================================================
+   Mobile-First Screen Wrapper
+   Optimized for smartphones & clean mobile frame on larger displays
+   ========================================================================== */
+
+.mobile-news-wrapper {
+  width: 100%;
+  max-width: 480px;
+  min-height: 100vh;
+  background-color: var(--bg-mobile);
+  position: relative;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 96px; /* Room for sticky ad banner */
+}
+
+/* ==========================================================================
+   Top Category Navigation Bar
+   ========================================================================== */
+
+.editorial-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: #ffffff;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.category-nav-bar {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.category-nav-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.category-nav-list {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  padding: 0 0.5rem;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.category-nav-item {
+  flex-shrink: 0;
+}
+
+.category-nav-link {
+  display: block;
+  padding: 0.8rem 0.9rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text-nav);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.category-nav-link:hover,
+.category-nav-link.is-active {
+  color: #000000;
+  border-bottom: 2px solid #000000;
+}
+
+/* ==========================================================================
+   Article Content Container
+   ========================================================================== */
+
+.article-container,
+.explore-article-container,
+.video-article-container {
+  padding: 1.25rem 1rem;
+  flex: 1 0 auto;
+}
+
+.article-header {
+  margin-bottom: 1.5rem;
+}
+
+.article-main-headline {
+  font-family: var(--font-serif);
+  font-size: 1.55rem;
+  font-weight: 700;
+  line-height: 1.28;
+  color: var(--text-headline);
+  margin-bottom: 0.85rem;
+  letter-spacing: -0.015em;
+}
+
+.article-subheadline {
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--text-subheadline);
+  margin-bottom: 1.2rem;
+}
+
+.article-meta-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
+}
+
+.author-name {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text-headline);
+}
+
+.publish-date {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  color: var(--text-meta);
+}
+
+/* Social Share Row */
+.social-share-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border-light);
+  margin-top: 0.5rem;
+}
+
+.social-icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid #111111;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #111111;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.social-icon-btn:hover {
+  background-color: #f3f4f6;
+}
+
+.social-icon-f {
+  font-family: var(--font-serif);
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.social-icon-x {
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.social-whatsapp-svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Paragraph Typography */
+.article-paragraph {
+  font-family: var(--font-serif);
+  font-size: 1.0625rem;
+  font-weight: 400;
+  line-height: 1.68;
+  color: var(--text-body);
+  margin-bottom: 1.4rem;
+}
+
+/* ==========================================================================
+   Article Media Figures & Counter Overlays
+   ========================================================================== */
+
+.article-media-figure,
+.article-video-figure {
+  margin: 1.5rem -1rem 1.75rem;
+  width: calc(100% + 2rem);
+  position: relative;
+  overflow: hidden;
+  background-color: #000000;
+}
+
+.article-image-box,
+.article-video-box {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background-color: #000000;
+  overflow: hidden;
+}
+
+.article-video-box.is-poster-state,
+.article-video-box.is-thumbnail-clickable,
+.video-player-frame.is-click-to-play {
+  cursor: pointer;
+}
+
+.article-inline-image,
+.video-poster-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+.article-video-box.is-poster-state:hover .video-poster-img,
+.article-video-box.is-thumbnail-clickable:hover .video-poster-img,
+.video-player-frame.is-click-to-play:hover .video-poster-img {
+  transform: scale(1.02);
+}
+
+.article-video-box.is-thumbnail-clickable:hover .center-play-disc,
+.video-player-frame.is-click-to-play:hover .center-play-disc {
+  transform: scale(1.1);
+  background-color: #0842a0;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7), 0 0 28px rgba(11, 87, 208, 0.6);
+}
+
+.inline-article-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  outline: none;
+  background-color: #000000;
+}
+
+/* Slide Counter (1/5 and 2/5 from screenshots) */
+.slide-counter-badge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  color: #ffffff;
+  padding: 0.4rem 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1;
+  border-bottom-right-radius: 4px;
+  z-index: 4;
+}
+
+.counter-text {
+  font-family: var(--font-sans);
+  font-size: 0.825rem;
+  font-weight: 700;
+}
+
+/* Red Share Pill (bottom right of image) */
+.image-share-pill {
+  position: absolute;
+  bottom: 0.75rem;
+  right: 0.75rem;
+  width: 38px;
+  height: 38px;
+  border-radius: 4px;
+  background-color: var(--accent-red);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  z-index: 4;
+}
+
+.image-share-svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Video Poster Layer & Direct Click-to-Play Overlay */
+.video-poster-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.center-play-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  background: radial-gradient(circle at center, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.45) 100%);
+  pointer-events: none;
+  transition: background 0.2s ease;
+}
+
+.center-play-disc {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(11, 87, 208, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6), 0 0 20px rgba(11, 87, 208, 0.4);
+  transition: transform 0.25s ease, background-color 0.2s ease, box-shadow 0.25s ease;
+}
+
+.center-play-svg {
+  width: 24px;
+  height: 24px;
+  fill: #ffffff;
+  transform: translateX(2px);
+}
+
+.center-play-text {
+  color: #ffffff;
+  font-family: var(--font-sans);
+  font-size: 0.775rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9);
+}
+
+.article-video-box.is-poster-state:hover .center-play-disc {
+  transform: scale(1.1);
+  background-color: #0842a0;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7), 0 0 28px rgba(11, 87, 208, 0.6);
+}
+
+/* ==========================================================================
+   PAGE 2: EXPLORE / CONTENT PAGE
+   ========================================================================== */
+
+.explore-editorial-content {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0;
+}
+
+.explore-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-meta);
+  margin-bottom: 0.75rem;
+}
+
+.explore-main-headline {
+  font-family: var(--font-serif);
+  font-size: 1.65rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--text-headline);
+  margin-bottom: 1.25rem;
+}
+
+.explore-body-text {
+  font-family: var(--font-serif);
+  font-size: 1.0625rem;
+  line-height: 1.68;
+  color: var(--text-body);
+  margin-bottom: 1.25rem;
+}
+
+.explore-video-wrapper {
+  margin-top: 1rem;
+}
+
+/* ==========================================================================
+   PAGE 3: VIDEO PAGE
+   ========================================================================== */
+
+.video-feature-header {
+  margin-bottom: 1.25rem;
+}
+
+.video-feature-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--accent-red);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.video-feature-headline {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1.28;
+  color: var(--text-headline);
+  margin-bottom: 0.75rem;
+}
+
+.video-return-link {
+  background: transparent;
+  border: none;
+  color: var(--accent-blue);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.video-player-frame {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background-color: #000000;
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.editorial-video-element {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  outline: none;
+}
+
+.video-buffering-indicator {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+}
+
+.video-spinner {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  border-top-color: #ffffff;
+  animation: spinnerRotate 0.8s linear infinite;
+}
+
+.video-error-box {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(17, 24, 39, 0.95);
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  text-align: center;
+  gap: 0.5rem;
+  z-index: 5;
+}
+
+.error-title {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.error-message {
+  font-size: 0.85rem;
+  color: #9ca3af;
+}
+
+.error-retry-action {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1.25rem;
+  background-color: var(--accent-blue);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   Sticky Bottom Ad Banner (Matches screenshot "Learn About Personal Loans")
+   ========================================================================== */
+
+.sticky-ad-banner {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  background-color: #ffffff;
+  border-top: 1px solid var(--border-light);
+  box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.08);
+  padding: 0.65rem 0.9rem;
+  z-index: 990;
+}
+
+.ad-close-btn {
+  position: absolute;
+  top: 0.35rem;
+  right: 0.5rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #6b7280;
+  padding: 0.2rem;
+  line-height: 1;
+}
+
+.ad-close-svg {
+  width: 16px;
+  height: 16px;
+}
+
+.ad-content-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-right: 1rem;
+}
+
+.ad-text-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.ad-headline {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1e3a8a;
+  text-decoration: underline;
+  line-height: 1.2;
+}
+
+.ad-subline {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.ad-sponsor-name {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.ad-info-icon {
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+.ad-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--accent-blue);
+  color: #ffffff;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  padding: 0.45rem 1.25rem;
+  border-radius: 100px;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(11, 87, 208, 0.25);
+  transition: background-color 0.15s ease;
+}
+
+.ad-action-btn:hover {
+  background-color: var(--accent-blue-hover);
+}
+
+/* ==========================================================================
+   Editorial Minimal Loader
+   ========================================================================== */
+
+.editorial-loader-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.editorial-loader-overlay.is-fading-out {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.editorial-loader-spinner {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 3px solid #e5e7eb;
+  border-top-color: var(--accent-blue);
+  animation: spinnerRotate 0.75s linear infinite;
+}
+
+@keyframes spinnerRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

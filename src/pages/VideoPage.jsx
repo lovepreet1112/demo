@@ -25,6 +25,27 @@ export default function VideoPage({
   useEffect(() => {
     window.scrollTo(0, 0);
     analytics.recordPageView('video');
+
+    if (videoRef.current) {
+      videoRef.current.muted = true;
+      const playPromise = videoRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            setIsPlaying(true);
+            setIsBuffering(false);
+            analytics.trackVideoStarted({
+              source: 'video_page_auto',
+              duration: videoRef.current ? videoRef.current.duration : 0,
+            });
+          })
+          .catch((err) => {
+            // eslint-disable-next-line no-console
+            console.warn('[VideoPage] Autoplay waiting for user interaction:', err);
+            setIsPlaying(false);
+          });
+      }
+    }
   }, []);
 
   const handleStartPlay = () => {
@@ -32,6 +53,7 @@ export default function VideoPage({
     setHasError(false);
 
     if (videoRef.current) {
+      videoRef.current.muted = true;
       const playPromise = videoRef.current.play();
       if (playPromise !== undefined) {
         playPromise
@@ -132,8 +154,9 @@ export default function VideoPage({
             src={videoSrc}
             poster={posterSrc}
             controls={isPlaying}
+            muted
             playsInline
-            preload="metadata"
+            preload="auto"
             className="editorial-video-element"
             onWaiting={() => setIsBuffering(true)}
             onPlaying={() => setIsBuffering(false)}

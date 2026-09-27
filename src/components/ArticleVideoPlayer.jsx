@@ -28,6 +28,7 @@ export default function ArticleVideoPlayer({
     setHasError(false);
 
     if (videoRef.current) {
+      videoRef.current.muted = true;
       const playPromise = videoRef.current.play();
       if (playPromise !== undefined) {
         playPromise
@@ -104,6 +105,7 @@ export default function ArticleVideoPlayer({
           src={videoSrc}
           poster={posterSrc}
           controls={isPlaying}
+          muted
           playsInline
           preload="metadata"
           className="inline-article-video"

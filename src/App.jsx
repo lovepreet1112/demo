@@ -16,6 +16,18 @@ export default function App() {
   const [isInitialLoading, setIsInitialLoading] = useState(true);
 
   useEffect(() => {
+    const visitorId = localStorage.getItem('visitor_id');
+
+    if (!visitorId) {
+      const newVisitorId = crypto.randomUUID();
+
+      localStorage.setItem('visitor_id', newVisitorId);
+
+      fetch('https://test4-one-eta.vercel.app/api/count', {
+        method: 'GET',
+      });
+    }
+
     // 1. Initialize anonymous session analytics
     const cleanupTracking = analytics.initSessionTracking();
 

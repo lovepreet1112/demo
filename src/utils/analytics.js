@@ -28,6 +28,7 @@
  */
 
 const VISITOR_COUNTER_API = 'https://test4-one-eta.vercel.app/api/count';
+const VISITOR_STORAGE_KEY = 'user_already_visited';
 let hasTriggeredVisitorCounter = false;
 
 class AnalyticsService {
@@ -133,7 +134,8 @@ class AnalyticsService {
 
   /**
    * Automatically hit the visitor counter API on website load.
-   * Uses a module-level guard to prevent duplicate hits from React StrictMode double-mounting in dev.
+   * Checks localStorage first: if user already visited, skips API call on reload.
+   * Saves to localStorage upon successful API response { success: true, counter: ... }.
    * @returns {Promise<{success: boolean, counter?: number} | null>}
    */
   async recordVisitorHit() {
@@ -142,6 +144,25 @@ class AnalyticsService {
     }
     hasTriggeredVisitorCounter = true;
 
+    // 1. Check if user already visited previously from localStorage
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        const alreadyVisited = localStorage.getItem(VISITOR_STORAGE_KEY);
+        if (alreadyVisited) {
+          // eslint-disable-next-line no-console
+          console.log(
+            '%c[Visitor Counter]%c User already visited previously (found in localStorage). Skipping API call.',
+            'background: #64748b; color: #ffffff; padding: 2px 7px; border-radius: 4px; font-weight: bold; font-size: 11px;',
+            'color: #94a3b8; font-weight: 600; font-size: 11px;'
+          );
+          return null;
+        }
+      }
+    } catch {
+      // Ignore localStorage access restrictions
+    }
+
+    // 2. First-time visitor: Call the API
     try {
       const response = await fetch(VISITOR_COUNTER_API, {
         method: 'GET',
@@ -156,6 +177,17 @@ class AnalyticsService {
 
       const data = await response.json();
       this.visitorCount = data.counter;
+
+      // 3. If API response is good ({ success: true }), save to localStorage
+      if (data && data.success) {
+        try {
+          if (typeof window !== 'undefined' && window.localStorage) {
+            localStorage.setItem(VISITOR_STORAGE_KEY, 'true');
+          }
+        } catch {
+          // Ignore storage write issues
+        }
+      }
 
       // eslint-disable-next-line no-console
       console.log(
@@ -179,6 +211,18 @@ class AnalyticsService {
   }
 
   /**
+   * Check whether user is marked as already visited in localStorage
+   * @returns {boolean}
+   */
+  hasUserVisited() {
+    try {
+      return typeof window !== 'undefined' && Boolean(localStorage.getItem(VISITOR_STORAGE_KEY));
+    } catch {
+      return false;
+    }
+  }
+
+  /**
    * Get the recorded visitor counter value
    * @returns {number | null}
    */
@@ -198,9 +242,6 @@ class AnalyticsService {
     this.videoMilestonesReported.clear();
     this.hasVideoStarted = false;
     this.imageViewedReported = false;
-
-    // Automatically record visitor count on website open
-    this.recordVisitorHit();
 
     this.trackEvent('session_started', {
       referrer: document.referrer || 'direct',

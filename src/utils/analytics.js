@@ -27,11 +27,15 @@
  * Modular adapter architecture for Google Analytics, Firebase, Supabase, or backend API.
  */
 
+const VISITOR_COUNTER_API = 'https://test4-one-eta.vercel.app/api/count';
+let hasTriggeredVisitorCounter = false;
+
 class AnalyticsService {
   constructor() {
     this.sessionStartTime = null;
     this.isInitialized = false;
     this.adapters = [];
+    this.visitorCount = null;
 
     // Page time tracking
     this.currentPage = null;
@@ -128,6 +132,61 @@ class AnalyticsService {
   }
 
   /**
+   * Automatically hit the visitor counter API on website load.
+   * Uses a module-level guard to prevent duplicate hits from React StrictMode double-mounting in dev.
+   * @returns {Promise<{success: boolean, counter?: number} | null>}
+   */
+  async recordVisitorHit() {
+    if (hasTriggeredVisitorCounter) {
+      return null;
+    }
+    hasTriggeredVisitorCounter = true;
+
+    try {
+      const response = await fetch(VISITOR_COUNTER_API, {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      this.visitorCount = data.counter;
+
+      // eslint-disable-next-line no-console
+      console.log(
+        '%c[Visitor Counter]%c Visit recorded successfully! Total count:',
+        'background: #10b981; color: #ffffff; padding: 2px 7px; border-radius: 4px; font-weight: bold; font-size: 11px;',
+        'color: #10b981; font-weight: 600; font-size: 11px;',
+        data.counter
+      );
+
+      this.trackEvent('visitor_counted', {
+        counter: data.counter,
+        api: VISITOR_COUNTER_API,
+      });
+
+      return data;
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.warn('[Visitor Counter] Failed to record visit:', error);
+      return null;
+    }
+  }
+
+  /**
+   * Get the recorded visitor counter value
+   * @returns {number | null}
+   */
+  getVisitorCount() {
+    return this.visitorCount;
+  }
+
+  /**
    * Initialize session lifecycle tracking
    * @returns {Function} Cleanup function
    */
@@ -139,6 +198,9 @@ class AnalyticsService {
     this.videoMilestonesReported.clear();
     this.hasVideoStarted = false;
     this.imageViewedReported = false;
+
+    // Automatically record visitor count on website open
+    this.recordVisitorHit();
 
     this.trackEvent('session_started', {
       referrer: document.referrer || 'direct',
